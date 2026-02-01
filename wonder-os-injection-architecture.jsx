@@ -208,19 +208,41 @@ const layers = [
   }
 ];
 
-export default function Architecture() {
+export default function WonderOSInjection() {
   return (
-    <div style={{ background: "#0a0a0f", minHeight: "100vh", color: "#e2e8f0", fontFamily: "'Inter', sans-serif", padding: "40px" }}>
-      <h1 style={{ marginBottom: "20px" }}>Injection Architecture</h1>
-      {layers.map((layer, i) => (
-        <div key={i} style={{ marginBottom: "30px", padding: "20px", border: "1px solid #1e1e2e", borderRadius: "12px" }}>
-          <h2>{layer.icon} {layer.title}</h2>
-          <p>{layer.summary}</p>
-          <div style={{ background: "#111", padding: "15px", borderRadius: "8px" }}>
-            <pre><code>{layer.code.join('\n')}</code></pre>
+    <div style={{ color: "#e2e8f0", fontFamily: "'Inter', sans-serif" }}>
+      {/* Header */}
+      <div style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%)", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.05)", padding: "24px 28px", marginBottom: "24px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "6px" }}>
+          <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "linear-gradient(135deg, #6366f1, #8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px" }}>⚡</div>
+          <div>
+            <h1 style={{ margin: 0, fontSize: "22px", fontWeight: 700, color: "#fff", letterSpacing: "-0.5px" }}>Wonder OS — Injection Engine</h1>
+            <span style={{ fontSize: "12px", color: "#6366f1", fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase" }}>Core Architecture • Layered Customization</span>
           </div>
         </div>
-      ))}
+      </div>
+
+      <div style={{ margin: "0 auto" }}>
+        {layers.map((layer, i) => (
+          <div key={i} style={{ marginBottom: "24px", padding: "24px", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "16px", background: "rgba(255,255,255,0.01)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+              <span style={{ fontSize: "24px" }}>{layer.icon}</span>
+              <h2 style={{ margin: 0, fontSize: "18px", fontWeight: 700, color: "#fff" }}>{layer.title}</h2>
+              <span style={{ fontSize: "10px", fontWeight: 700, background: `${layer.tagColor}22`, color: layer.tagColor, padding: "4px 10px", borderRadius: "20px", border: `1px solid ${layer.tagColor}33` }}>{layer.tag}</span>
+            </div>
+            <p style={{ color: "#94a3b8", fontSize: "14px", lineHeight: 1.6, marginBottom: "20px" }}>{layer.summary}</p>
+
+            <div style={{ background: "#05050a", padding: "20px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.05)", overflowX: "auto" }}>
+              <pre style={{ margin: 0 }}><code style={{ fontSize: "13px", color: "#c4b5fd" }}>{layer.code.join('\n')}</code></pre>
+            </div>
+
+            <div style={{ marginTop: "20px", padding: "16px", background: "rgba(99, 102, 241, 0.05)", borderRadius: "10px", border: "1px solid rgba(99, 102, 241, 0.1)" }}>
+              <span style={{ fontSize: "11px", fontWeight: 700, color: "#818cf8", textTransform: "uppercase", display: "block", marginBottom: "4px" }}>Why it works</span>
+              <p style={{ margin: 0, fontSize: "13px", color: "#94a3b8", lineHeight: 1.5 }}>{layer.whyEvergreen}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

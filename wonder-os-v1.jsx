@@ -1,281 +1,284 @@
-
 import { useState } from "react";
 
-const phases = [
-  {
-    week: "Week 1-2",
-    label: "Foundation",
-    color: "#a78bfa",
-    tasks: [
-      "Next.js 14 project scaffolding (Vercel)",
-      "Supabase PostgreSQL setup (platform DB)",
-      "Auth system (NextAuth.js + email/password + Google OAuth)",
-      "Core DB schema: customers, projects, deployments, subscriptions",
-      "Razorpay payment integration (test mode)",
-      "GitHub org + private template repos created",
-      "Domain setup: wonderos.in + staging environments",
-    ],
-  },
-  {
-    week: "Week 3-4",
-    label: "Template #1",
-    color: "#60a5fa",
-    tasks: [
-      "Service Business Hub template (full React Native + Next.js backend)",
-      "Template repo structure: /frontend, /backend, /mobile, /config",
-      "Branding injection system (logo, colors, fonts, app name)",
-      "Feature toggle engine (enable/disable modules via JSON config)",
-      "Supabase per-app database provisioning script",
-      "Cloudflare R2 bucket provisioning per app",
-      "Basic deployment script: clone → inject → deploy → verify",
-    ],
-  },
-  {
-    week: "Week 5-6",
-    label: "Deployment Pipeline",
-    color: "#34d399",
-    tasks: [
-      "Semi-automated deployment pipeline (GitHub Actions)",
-      "Vercel programmatic deploy API integration",
-      "Custom domain configuration automation (Cloudflare API)",
-      "SSL auto-provisioning verification",
-      "Health check system (endpoint verification post-deploy)",
-      "Deployment status tracking in platform DB",
-      "Founder notification system (email + dashboard)",
-    ],
-  },
-  {
-    week: "Week 7-8",
-    label: "Founder Dashboard",
-    color: "#fb923c",
-    tasks: [
-      "Founder registration + onboarding flow",
-      "Project dashboard (status, URLs, metrics)",
-      "Configurator UI: template selection → feature picker → pricing",
-      "Real-time deployment progress tracker",
-      "Support ticket system (simple)",
-      "Billing dashboard (Razorpay subscription view)",
-      "Documentation & onboarding guides embedded",
-    ],
-  },
-  {
-    week: "Week 9-10",
-    label: "Template #2 + Mobile",
-    color: "#f472b6",
-    tasks: [
-      "Healthcare Management template (booking + patient portal)",
-      "React Native mobile app builds (iOS + Android)",
-      "EAS Build (Expo) CI/CD for mobile",
-      "App Store submission guide + assisted workflow",
-      "Play Store submission guide + assisted workflow",
-      "TestFlight beta distribution setup",
-      "Mobile app template injection (icons, splash, API endpoints)",
-    ],
-  },
-  {
-    week: "Week 11-12",
-    label: "Templates #3-5 + Launch",
-    color: "#c084fc",
-    tasks: [
-      "Real Estate Platform template",
-      "Education/Coaching template",
-      "E-commerce Store template",
-      "Beta testing with 5 real founders",
-      "Bug fixes + performance tuning",
-      "Internal ops dashboard (Wonder team)",
-      "Public launch preparation (website, case studies, pricing page)",
-    ],
-  },
-];
-
-const architecture = {
-  layers: [
-    {
-      name: "CLIENT LAYER",
-      color: "#6366f1",
-      components: [
-        { name: "Public Website", detail: "Landing, pricing, showcase" },
-        { name: "Founder Dashboard", detail: "Projects, deployments, billing" },
-        { name: "Wonder Admin", detail: "Internal ops, support, monitoring" },
-      ],
-    },
-    {
-      name: "FRONTEND (Next.js 14)",
-      color: "#8b5cf6",
-      components: [
-        { name: "Public Pages", detail: "SEO-optimized, configurator entry" },
-        { name: "Auth Layer", detail: "NextAuth.js — email, Google OAuth" },
-        { name: "Founder Portal", detail: "Dashboard, projects, support" },
-        { name: "Admin Panel", detail: "Internal team only" },
-      ],
-    },
-    {
-      name: "BACKEND (Next.js API Routes)",
-      color: "#a78bfa",
-      components: [
-        { name: "Auth & Identity", detail: "JWT, RBAC, sessions" },
-        { name: "Project Management", detail: "CRUD, status tracking" },
-        { name: "Configurator Engine", detail: "Template → config → pricing" },
-        { name: "Deployment Orchestrator", detail: "Triggers GitHub Actions" },
-        { name: "Billing Service", detail: "Razorpay subscriptions" },
-        { name: "Support System", detail: "Ticket CRUD, assignment" },
-      ],
-    },
-    {
-      name: "DEPLOYMENT PIPELINE",
-      color: "#7c3aed",
-      components: [
-        { name: "GitHub Actions", detail: "CI/CD trigger per deployment" },
-        { name: "Template Engine", detail: "Clone → inject config → build" },
-        { name: "Vercel Deploy API", detail: "Programmatic web deploy" },
-        { name: "Supabase Provisioner", detail: "New DB per founder app" },
-        { name: "Cloudflare APIs", detail: "Domain + R2 + SSL" },
-        { name: "Mobile Build (EAS)", detail: "iOS .ipa + Android .aab" },
-      ],
-    },
-    {
-      name: "DATA LAYER",
-      color: "#5b21b6",
-      components: [
-        { name: "Platform DB", detail: "Supabase — customers, projects" },
-        { name: "App DBs", detail: "Isolated Supabase per founder app" },
-        { name: "File Storage", detail: "Cloudflare R2 per app" },
-      ],
-    },
-  ],
-};
-
-const techStack = [
-  {
-    category: "Frontend",
-    icon: "🖥️",
-    items: [
-      { name: "Next.js 14", role: "App Router, SSR, API routes" },
-      { name: "React 18", role: "UI components" },
-      { name: "TypeScript", role: "Type safety everywhere" },
-      { name: "Tailwind CSS", role: "Styling" },
-      { name: "shadcn/ui", role: "Component library" },
-      { name: "Zustand", role: "Client state" },
-      { name: "React Query", role: "Server state + caching" },
-    ],
-  },
-  {
-    category: "Backend",
-    icon: "⚙️",
-    items: [
-      { name: "Next.js API Routes", role: "All backend logic" },
-      { name: "Prisma", role: "ORM + migrations" },
-      { name: "Zod", role: "Input validation" },
-      { name: "NextAuth.js", role: "Authentication" },
-      { name: "Razorpay", role: "Payments (India)" },
-      { name: "Resend", role: "Email delivery" },
-    ],
-  },
-  {
-    category: "Infrastructure",
-    icon: "☁️",
-    items: [
-      { name: "Vercel", role: "Hosting (platform + founder apps)" },
-      { name: "Supabase", role: "PostgreSQL managed DB" },
-      { name: "Cloudflare", role: "CDN + R2 storage + domains" },
-      { name: "GitHub Actions", role: "Deployment automation" },
-      { name: "Sentry", role: "Error monitoring" },
-      { name: "Better Stack", role: "Uptime + logs" },
-    ],
-  },
-  {
-    category: "Mobile",
-    icon: "📱",
-    items: [
-      { name: "React Native 0.73", role: "iOS + Android apps" },
-      { name: "Expo (EAS Build)", role: "Cloud builds + signing" },
-      { name: "Fastlane", role: "Store submission automation" },
-    ],
-  },
-];
-
-const templates = [
-  {
-    name: "Service Business Hub",
-    week: "Week 3-4",
-    status: "first",
-    icon: "🏢",
-    features: ["Booking system", "Client portal", "Payment integration", "Admin dashboard", "Email confirmations", "SMS reminders"],
-    useCases: ["Salons", "Consultants", "Tutors", "Freelancers", "Agencies"],
-  },
-  {
-    name: "Healthcare Management",
-    week: "Week 9-10",
-    status: "second",
-    icon: "🏥",
-    features: ["Patient portal", "Appointment booking", "Doctor dashboard", "Prescription system", "Payment gateway", "Reminder system"],
-    useCases: ["Clinics", "Dentists", "Therapists", "Labs", "Telehealth"],
-  },
-  {
-    name: "Real Estate Platform",
-    week: "Week 11-12",
-    status: "third",
-    icon: "🏠",
-    features: ["Property listings", "Search & filters", "Inquiry system", "Agent dashboard", "Virtual tours", "Lead management"],
-    useCases: ["Agents", "Brokers", "Developers", "PG providers"],
-  },
-  {
-    name: "Education & Coaching",
-    week: "Week 11-12",
-    status: "third",
-    icon: "📚",
-    features: ["Course catalog", "Student dashboard", "Video hosting", "Quiz system", "Certificate generation", "Payment gating"],
-    useCases: ["Coaches", "EdTech", "YouTube creators", "Corporate trainers"],
-  },
-  {
-    name: "E-commerce Store",
-    week: "Week 11-12",
-    status: "third",
-    icon: "🛒",
-    features: ["Product catalog", "Shopping cart", "Razorpay checkout", "Order management", "Inventory system", "Delivery tracking"],
-    useCases: ["D2C brands", "Local shops", "Artisans", "Dropshippers"],
-  },
-];
-
-const teamRoles = [
-  { name: "Priyabrata (CEO)", role: "Sales, strategy, client relations, configurator UX decisions", hours: "Full-time" },
-  { name: "Mainak (CTO)", role: "Template architecture, deployment pipeline, backend APIs, infrastructure", hours: "Full-time" },
-  { name: "Shubhodeep (Designer/PM)", role: "Template UI/UX, founder dashboard design, client customization layer", hours: "Full-time" },
-  { name: "Anirban (Sales)", role: "Client acquisition, demo calls, onboarding coordination", hours: "Full-time" },
-  { name: "Dev 1", role: "Template #1 build (Service Hub), deployment scripts", hours: "Full-time" },
-  { name: "Dev 2", role: "Templates #2-5 build, mobile (React Native)", hours: "Full-time" },
-  { name: "Support/QA", role: "Testing, App Store submissions, client support", hours: "Full-time" },
-];
-
-const notBuildList = [
-  { item: "AI Agents (Concierge, Filter, Content, Insights)", reason: "Add Month 7+ after 50 apps deployed", priority: "Later" },
-  { item: "Full CRM System", reason: "Use simple lead forms + spreadsheet initially", priority: "Later" },
-  { item: "22 n8n Workflows", reason: "Use n8n for YOUR internal ops only", priority: "Later" },
-  { item: "Template Marketplace", reason: "Need 100+ apps first. Year 2.", priority: "Later" },
-  { item: "White-Label Platform", reason: "Need proven model first. Year 2.", priority: "Later" },
-  { item: "Microservices", reason: "Monolith works up to 1000 apps", priority: "Never (until needed)" },
-  { item: "Multi-Region Deployment", reason: "India-only Year 1", priority: "Never (until needed)" },
-  { item: "Vector Databases / RAG", reason: "No AI features in v1.0", priority: "Later" },
-  { item: "Analytics Dashboard", reason: "Use PostHog free tier initially", priority: "Month 4+" },
-  { item: "WhatsApp Automation", reason: "Manual WhatsApp initially", priority: "Month 4+" },
-];
-
-const deployFlow = [
-  { step: 1, title: "Founder Pays", detail: "Razorpay captures setup fee (₹5-10L)", time: "Day 0" },
-  { step: 2, title: "Job Queued", detail: "Payment webhook triggers deployment record in DB", time: "Seconds" },
-  { step: 3, title: "GitHub Actions Triggered", detail: "Deployment script fires via API call", time: "< 1 min" },
-  { step: 4, title: "Clone Template Repo", detail: "Private GitHub repo cloned to runner", time: "< 30 sec" },
-  { step: 5, title: "Inject Config", detail: "Branding, features, env vars injected into codebase", time: "< 1 min" },
-  { step: 6, title: "Provision Database", detail: "Supabase API creates new PostgreSQL instance", time: "2-3 min" },
-  { step: 7, title: "Provision Storage", detail: "Cloudflare R2 bucket created via API", time: "< 1 min" },
-  { step: 8, title: "Build & Deploy", detail: "Next.js build → Vercel programmatic deploy", time: "3-5 min" },
-  { step: 9, title: "Run Migrations", detail: "Prisma migrations against new database", time: "< 1 min" },
-  { step: 10, title: "Configure Domain", detail: "Cloudflare DNS + SSL via API", time: "2-5 min" },
-  { step: 11, title: "Health Check", detail: "Verify endpoints, auth, DB connection", time: "< 1 min" },
-  { step: 12, title: "Status → LIVE", detail: "Dashboard updated, founder notified via email", time: "Instant" },
-];
-
 export default function WonderOSV1() {
+
+  const phases = [
+    {
+      week: "Week 1-2",
+      label: "Foundation",
+      color: "#a78bfa",
+      tasks: [
+        "Next.js 14 project scaffolding (Vercel)",
+        "Supabase PostgreSQL setup (platform DB)",
+        "Auth system (NextAuth.js + email/password + Google OAuth)",
+        "Core DB schema: customers, projects, deployments, subscriptions",
+        "Razorpay payment integration (test mode)",
+        "GitHub org + private template repos created",
+        "Domain setup: wonderos.in + staging environments",
+      ],
+    },
+    {
+      week: "Week 3-4",
+      label: "Template #1",
+      color: "#60a5fa",
+      tasks: [
+        "Service Business Hub template (full React Native + Next.js backend)",
+        "Template repo structure: /frontend, /backend, /mobile, /config",
+        "Branding injection system (logo, colors, fonts, app name)",
+        "Feature toggle engine (enable/disable modules via JSON config)",
+        "Supabase per-app database provisioning script",
+        "Cloudflare R2 bucket provisioning per app",
+        "Basic deployment script: clone → inject → deploy → verify",
+      ],
+    },
+    {
+      week: "Week 5-6",
+      label: "Deployment Pipeline",
+      color: "#34d399",
+      tasks: [
+        "Semi-automated deployment pipeline (GitHub Actions)",
+        "Vercel programmatic deploy API integration",
+        "Custom domain configuration automation (Cloudflare API)",
+        "SSL auto-provisioning verification",
+        "Health check system (endpoint verification post-deploy)",
+        "Deployment status tracking in platform DB",
+        "Founder notification system (email + dashboard)",
+      ],
+    },
+    {
+      week: "Week 7-8",
+      label: "Founder Dashboard",
+      color: "#fb923c",
+      tasks: [
+        "Founder registration + onboarding flow",
+        "Project dashboard (status, URLs, metrics)",
+        "Configurator UI: template selection → feature picker → pricing",
+        "Real-time deployment progress tracker",
+        "Support ticket system (simple)",
+        "Billing dashboard (Razorpay subscription view)",
+        "Documentation & onboarding guides embedded",
+      ],
+    },
+    {
+      week: "Week 9-10",
+      label: "Template #2 + Mobile",
+      color: "#f472b6",
+      tasks: [
+        "Healthcare Management template (booking + patient portal)",
+        "React Native mobile app builds (iOS + Android)",
+        "EAS Build (Expo) CI/CD for mobile",
+        "App Store submission guide + assisted workflow",
+        "Play Store submission guide + assisted workflow",
+        "TestFlight beta distribution setup",
+        "Mobile app template injection (icons, splash, API endpoints)",
+      ],
+    },
+    {
+      week: "Week 11-12",
+      label: "Templates #3-5 + Launch",
+      color: "#c084fc",
+      tasks: [
+        "Real Estate Platform template",
+        "Education/Coaching template",
+        "E-commerce Store template",
+        "Beta testing with 5 real founders",
+        "Bug fixes + performance tuning",
+        "Internal ops dashboard (Wonder team)",
+        "Public launch preparation (website, case studies, pricing page)",
+      ],
+    },
+  ];
+
+  const architecture = {
+    layers: [
+      {
+        name: "CLIENT LAYER",
+        color: "#6366f1",
+        components: [
+          { name: "Public Website", detail: "Landing, pricing, showcase" },
+          { name: "Founder Dashboard", detail: "Projects, deployments, billing" },
+          { name: "Wonder Admin", detail: "Internal ops, support, monitoring" },
+        ],
+      },
+      {
+        name: "FRONTEND (Next.js 14)",
+        color: "#8b5cf6",
+        components: [
+          { name: "Public Pages", detail: "SEO-optimized, configurator entry" },
+          { name: "Auth Layer", detail: "NextAuth.js — email, Google OAuth" },
+          { name: "Founder Portal", detail: "Dashboard, projects, support" },
+          { name: "Admin Panel", detail: "Internal team only" },
+        ],
+      },
+      {
+        name: "BACKEND (Next.js API Routes)",
+        color: "#a78bfa",
+        components: [
+          { name: "Auth & Identity", detail: "JWT, RBAC, sessions" },
+          { name: "Project Management", detail: "CRUD, status tracking" },
+          { name: "Configurator Engine", detail: "Template → config → pricing" },
+          { name: "Deployment Orchestrator", detail: "Triggers GitHub Actions" },
+          { name: "Billing Service", detail: "Razorpay subscriptions" },
+          { name: "Support System", detail: "Ticket CRUD, assignment" },
+        ],
+      },
+      {
+        name: "DEPLOYMENT PIPELINE",
+        color: "#7c3aed",
+        components: [
+          { name: "GitHub Actions", detail: "CI/CD trigger per deployment" },
+          { name: "Template Engine", detail: "Clone → inject config → build" },
+          { name: "Vercel Deploy API", detail: "Programmatic web deploy" },
+          { name: "Supabase Provisioner", detail: "New DB per founder app" },
+          { name: "Cloudflare APIs", detail: "Domain + R2 + SSL" },
+          { name: "Mobile Build (EAS)", detail: "iOS .ipa + Android .aab" },
+        ],
+      },
+      {
+        name: "DATA LAYER",
+        color: "#5b21b6",
+        components: [
+          { name: "Platform DB", detail: "Supabase — customers, projects" },
+          { name: "App DBs", detail: "Isolated Supabase per founder app" },
+          { name: "File Storage", detail: "Cloudflare R2 per app" },
+        ],
+      },
+    ],
+  };
+
+  const techStack = [
+    {
+      category: "Frontend",
+      icon: "🖥️",
+      items: [
+        { name: "Next.js 14", role: "App Router, SSR, API routes" },
+        { name: "React 18", role: "UI components" },
+        { name: "TypeScript", role: "Type safety everywhere" },
+        { name: "Tailwind CSS", role: "Styling" },
+        { name: "shadcn/ui", role: "Component library" },
+        { name: "Zustand", role: "Client state" },
+        { name: "React Query", role: "Server state + caching" },
+      ],
+    },
+    {
+      category: "Backend",
+      icon: "⚙️",
+      items: [
+        { name: "Next.js API Routes", role: "All backend logic" },
+        { name: "Prisma", role: "ORM + migrations" },
+        { name: "Zod", role: "Input validation" },
+        { name: "NextAuth.js", role: "Authentication" },
+        { name: "Razorpay", role: "Payments (India)" },
+        { name: "Resend", role: "Email delivery" },
+      ],
+    },
+    {
+      category: "Infrastructure",
+      icon: "☁️",
+      items: [
+        { name: "Vercel", role: "Hosting (platform + founder apps)" },
+        { name: "Supabase", role: "PostgreSQL managed DB" },
+        { name: "Cloudflare", role: "CDN + R2 storage + domains" },
+        { name: "GitHub Actions", role: "Deployment automation" },
+        { name: "Sentry", role: "Error monitoring" },
+        { name: "Better Stack", role: "Uptime + logs" },
+      ],
+    },
+    {
+      category: "Mobile",
+      icon: "📱",
+      items: [
+        { name: "React Native 0.73", role: "iOS + Android apps" },
+        { name: "Expo (EAS Build)", role: "Cloud builds + signing" },
+        { name: "Fastlane", role: "Store submission automation" },
+      ],
+    },
+  ];
+
+  const templates = [
+    {
+      name: "Service Business Hub",
+      week: "Week 3-4",
+      status: "first",
+      icon: "🏢",
+      features: ["Booking system", "Client portal", "Payment integration", "Admin dashboard", "Email confirmations", "SMS reminders"],
+      useCases: ["Salons", "Consultants", "Tutors", "Freelancers", "Agencies"],
+    },
+    {
+      name: "Healthcare Management",
+      week: "Week 9-10",
+      status: "second",
+      icon: "🏥",
+      features: ["Patient portal", "Appointment booking", "Doctor dashboard", "Prescription system", "Payment gateway", "Reminder system"],
+      useCases: ["Clinics", "Dentists", "Therapists", "Labs", "Telehealth"],
+    },
+    {
+      name: "Real Estate Platform",
+      week: "Week 11-12",
+      status: "third",
+      icon: "🏠",
+      features: ["Property listings", "Search & filters", "Inquiry system", "Agent dashboard", "Virtual tours", "Lead management"],
+      useCases: ["Agents", "Brokers", "Developers", "PG providers"],
+    },
+    {
+      name: "Education & Coaching",
+      week: "Week 11-12",
+      status: "third",
+      icon: "📚",
+      features: ["Course catalog", "Student dashboard", "Video hosting", "Quiz system", "Certificate generation", "Payment gating"],
+      useCases: ["Coaches", "EdTech", "YouTube creators", "Corporate trainers"],
+    },
+    {
+      name: "E-commerce Store",
+      week: "Week 11-12",
+      status: "third",
+      icon: "🛒",
+      features: ["Product catalog", "Shopping cart", "Razorpay checkout", "Order management", "Inventory system", "Delivery tracking"],
+      useCases: ["D2C brands", "Local shops", "Artisans", "Dropshippers"],
+    },
+  ];
+
+  const teamRoles = [
+    { name: "Priyabrata (CEO)", role: "Sales, strategy, client relations, configurator UX decisions", hours: "Full-time" },
+    { name: "Mainak (CTO)", role: "Template architecture, deployment pipeline, backend APIs, infrastructure", hours: "Full-time" },
+    { name: "Shubhodeep (Designer/PM)", role: "Template UI/UX, founder dashboard design, client customization layer", hours: "Full-time" },
+    { name: "Anirban (Sales)", role: "Client acquisition, demo calls, onboarding coordination", hours: "Full-time" },
+    { name: "Dev 1", role: "Template #1 build (Service Hub), deployment scripts", hours: "Full-time" },
+    { name: "Dev 2", role: "Templates #2-5 build, mobile (React Native)", hours: "Full-time" },
+    { name: "Support/QA", role: "Testing, App Store submissions, client support", hours: "Full-time" },
+  ];
+
+  const notBuildList = [
+    { item: "AI Agents (Concierge, Filter, Content, Insights)", reason: "Add Month 7+ after 50 apps deployed", priority: "Later" },
+    { item: "Full CRM System", reason: "Use simple lead forms + spreadsheet initially", priority: "Later" },
+    { item: "22 n8n Workflows", reason: "Use n8n for YOUR internal ops only", priority: "Later" },
+    { item: "Template Marketplace", reason: "Need 100+ apps first. Year 2.", priority: "Later" },
+    { item: "White-Label Platform", reason: "Need proven model first. Year 2.", priority: "Later" },
+    { item: "Microservices", reason: "Monolith works up to 1000 apps", priority: "Never (until needed)" },
+    { item: "Multi-Region Deployment", reason: "India-only Year 1", priority: "Never (until needed)" },
+    { item: "Vector Databases / RAG", reason: "No AI features in v1.0", priority: "Later" },
+    { item: "Analytics Dashboard", reason: "Use PostHog free tier initially", priority: "Month 4+" },
+    { item: "WhatsApp Automation", reason: "Manual WhatsApp initially", priority: "Month 4+" },
+  ];
+
+  const deployFlow = [
+    { step: 1, title: "Founder Pays", detail: "Razorpay captures setup fee (₹5-10L)", time: "Day 0" },
+    { step: 2, title: "Job Queued", detail: "Payment webhook triggers deployment record in DB", time: "Seconds" },
+    { step: 3, title: "GitHub Actions Triggered", detail: "Deployment script fires via API call", time: "< 1 min" },
+    { step: 4, title: "Clone Template Repo", detail: "Private GitHub repo cloned to runner", time: "< 30 sec" },
+    { step: 5, title: "Inject Config", detail: "Branding, features, env vars injected into codebase", time: "< 1 min" },
+    { step: 6, title: "Provision Database", detail: "Supabase API creates new PostgreSQL instance", time: "2-3 min" },
+    { step: 7, title: "Provision Storage", detail: "Cloudflare R2 bucket created via API", time: "< 1 min" },
+    { step: 8, title: "Build & Deploy", detail: "Next.js build → Vercel programmatic deploy", time: "3-5 min" },
+    { step: 9, title: "Run Migrations", detail: "Prisma migrations against new database", time: "< 1 min" },
+    { step: 10, title: "Configure Domain", detail: "Cloudflare DNS + SSL via API", time: "2-5 min" },
+    { step: 11, title: "Health Check", detail: "Verify endpoints, auth, DB connection", time: "< 1 min" },
+    { step: 12, title: "Status → LIVE", detail: "Dashboard updated, founder notified via email", time: "Instant" },
+  ];
+
+  // ... (data remain same)
+
+  // export default function WonderOSV1() { // moved to top
   const [activeTab, setActiveTab] = useState("architecture");
   const [expandedTemplate, setExpandedTemplate] = useState(0);
   const [expandedPhase, setExpandedPhase] = useState(0);
@@ -290,9 +293,9 @@ export default function WonderOSV1() {
   ];
 
   return (
-    <div style={{ background: "#0a0a0f", minHeight: "100vh", color: "#e2e8f0", fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ color: "#e2e8f0", fontFamily: "'Inter', sans-serif" }}>
       {/* Header */}
-      <div style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%)", borderBottom: "1px solid #1e1e2e", padding: "24px 28px" }}>
+      <div style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%)", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.05)", padding: "24px 28px", marginBottom: "24px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "6px" }}>
           <div style={{ width: "36px", height: "36px", borderRadius: "10px", background: "linear-gradient(135deg, #6366f1, #8b5cf6)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "18px" }}>⚡</div>
           <div>
@@ -303,7 +306,7 @@ export default function WonderOSV1() {
       </div>
 
       {/* Tabs */}
-      <div style={{ display: "flex", gap: "4px", padding: "12px 28px", background: "#0f0f18", borderBottom: "1px solid #1e1e2e", overflowX: "auto" }}>
+      <div style={{ display: "flex", gap: "6px", padding: "6px", background: "rgba(255,255,255,0.02)", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.03)", marginBottom: "24px", overflowX: "auto" }}>
         {tabs.map((tab) => (
           <button
             key={tab.id}
@@ -326,7 +329,7 @@ export default function WonderOSV1() {
         ))}
       </div>
 
-      <div style={{ padding: "24px 28px", maxWidth: "1100px", margin: "0 auto" }}>
+      <div style={{ margin: "0 auto" }}>
 
         {/* === ARCHITECTURE TAB === */}
         {activeTab === "architecture" && (

@@ -1,162 +1,166 @@
 import { useState } from "react";
 
-const checklist = [
-  {
-    phase: "WEEK 1-2: FOUNDATION", color: "#a78bfa", icon: "🏗️",
-    items: [
-      { task: "Next.js 14 project scaffolded + pushed to GitHub", critical: true },
-      { task: "Vercel connected — staging URL live", critical: true },
-      { task: "Supabase project created (platform DB)", critical: true },
-      { task: "Prisma ORM configured + connected to Supabase", critical: true },
-      { task: "Core DB schema: customers, projects, deployments, subscriptions", critical: true },
-      { task: "NextAuth.js: email/password + Google OAuth working", critical: true },
-      { task: "Razorpay test keys integrated — test payment flows", critical: true },
-      { task: "GitHub org + 5 private template repo placeholders", critical: false },
-      { task: "wonderos.in domain + Cloudflare DNS configured", critical: false },
-      { task: "Staging vs production env separated on Vercel", critical: false },
-      { task: "Resend email connected + test email sent", critical: false },
-      { task: "Sentry error monitoring connected", critical: false },
-    ],
-  },
-  {
-    phase: "WEEK 3-4: TEMPLATE #1 — SERVICE BUSINESS HUB", color: "#60a5fa", icon: "🏢",
-    items: [
-      { task: "Template repo created with full folder structure", critical: true },
-      { task: "Next.js frontend: booking page, service catalog, client portal", critical: true },
-      { task: "Backend APIs: booking, availability logic, payments", critical: true },
-      { task: "React Native mobile screens scaffolded (iOS + Android)", critical: true },
-      { task: "Branding injection system: logo, colors, fonts via JSON config", critical: true },
-      { task: "Feature toggle engine: enable/disable modules per config", critical: true },
-      { task: "Per-app Supabase DB provisioning script tested", critical: true },
-      { task: "Cloudflare R2 bucket provisioning script tested", critical: false },
-      { task: "Service owner admin dashboard (bookings, revenue)", critical: false },
-      { task: "Auto email confirmation on booking", critical: false },
-      { task: "Template docs: features, config options, customization points", critical: false },
-    ],
-  },
-  {
-    phase: "WEEK 5-6: DEPLOYMENT PIPELINE", color: "#34d399", icon: "🚀",
-    items: [
-      { task: "GitHub Actions workflow written + tested end-to-end", critical: true },
-      { task: "Vercel programmatic Deploy API working", critical: true },
-      { task: "Full pipeline: payment → trigger → clone → inject → deploy → LIVE", critical: true },
-      { task: "Cloudflare domain + SSL auto-config via API", critical: true },
-      { task: "Health checks: post-deploy endpoint verification", critical: true },
-      { task: "Real-time deployment status in platform DB", critical: true },
-      { task: "Founder notification email on deploy success", critical: false },
-      { task: "Failed deploy → Slack/email alert to Wonder team", critical: false },
-      { task: "Rollback: auto-revert if health check fails", critical: false },
-      { task: "Deploy logs stored + viewable", critical: false },
-    ],
-  },
-  {
-    phase: "WEEK 7-8: FOUNDER DASHBOARD", color: "#fb923c", icon: "📊",
-    items: [
-      { task: "Registration + onboarding flow (signup → verify → profile)", critical: true },
-      { task: "Configurator: template picker → features → pricing preview", critical: true },
-      { task: "Dashboard home: projects, status, quick actions", critical: true },
-      { task: "Real-time deployment progress tracker (visual steps)", critical: true },
-      { task: "Billing: plan, invoices, upgrade/downgrade", critical: true },
-      { task: "Support tickets: create, status, reply", critical: true },
-      { task: "Onboarding checklist for first-time setup", critical: false },
-      { task: "Settings: profile, team, API keys", critical: false },
-      { task: "Dashboard fully mobile-responsive", critical: false },
-    ],
-  },
-  {
-    phase: "WEEK 9-10: TEMPLATE #2 + MOBILE BUILDS", color: "#f472b6", icon: "🏥📱",
-    items: [
-      { task: "Healthcare Management template built (patient + doctor portals)", critical: true },
-      { task: "Appointment booking + availability (healthcare-specific)", critical: true },
-      { task: "React Native builds working via Expo EAS Build", critical: true },
-      { task: "iOS .ipa generated + code-signed", critical: true },
-      { task: "Android .aab generated + signed", critical: true },
-      { task: "TestFlight beta distribution set up", critical: true },
-      { task: "App Store submission guide (step-by-step)", critical: false },
-      { task: "Play Store submission guide", critical: false },
-      { task: "Mobile branding injection tested (icon, splash, colors)", critical: false },
-      { task: "E2E mobile test suite (basic flows)", critical: false },
-    ],
-  },
-  {
-    phase: "WEEK 11-12: TEMPLATES #3-5 + LAUNCH", color: "#c084fc", icon: "🚢",
-    items: [
-      { task: "Real Estate Platform template built + tested", critical: true },
-      { task: "Education & Coaching template built + tested", critical: true },
-      { task: "E-commerce Store template built + tested", critical: true },
-      { task: "All 5 templates deployed end-to-end at least once", critical: true },
-      { task: "5 beta founders onboarded + apps live", critical: true },
-      { task: "Beta feedback collected + critical bugs fixed", critical: true },
-      { task: "Internal ops dashboard for Wonder team", critical: false },
-      { task: "Public website: landing, pricing, case studies, demo", critical: false },
-      { task: "Launch announcement prepped (email, social, communities)", critical: false },
-      { task: "Post-launch monitoring: Sentry + uptime + alerts active", critical: false },
-    ],
-  },
-];
+export default function WonderOSComplete() {
 
-const postData = [
-  {
-    month: "Month 4-5", title: "REVENUE + ITERATION", color: "#6366f1",
-    targets: ["10-20 paying customers", "₹1-2 Cr revenue", "95%+ store approval"],
-    actions: ["Fix all beta bugs", "Add PostHog analytics (free tier)", "Email drip sequences for founders", "Refine configurator from real usage", "Maintenance revenue starts (₹50K-2L/mo per app)", "Track NPS, churn, LTV"],
-  },
-  {
-    month: "Month 6", title: "GROWTH ENGINE", color: "#60a5fa",
-    targets: ["30+ apps deployed", "₹3-5 Cr revenue", "MRR ₹20-40L"],
-    actions: ["Simple CRM (HubSpot free)", "WhatsApp per client (manual)", "n8n for internal ops only", "Client case study videos", "Launch referral program", "Finalize sales playbook for Anirban"],
-  },
-  {
-    month: "Month 7-9", title: "AI + SCALE", color: "#34d399",
-    targets: ["50+ apps deployed", "₹5-10 Cr revenue", "Team 12-15 people"],
-    actions: ["Wonder Concierge AI chatbot (optional)", "Wonder Filter AI lead scoring", "Upgraded self-service configurator", "2-3 new templates from demand", "International pricing (USD)", "Seed fundraise if needed"],
-  },
-  {
-    month: "Month 10-12", title: "PLATFORM PLAY", color: "#fb923c",
-    targets: ["100+ apps deployed", "₹10-15 Cr revenue", "MRR ₹1 Cr+"],
-    actions: ["White-label pilot (3-5 agencies)", "Template marketplace beta", "Full founder analytics", "Enterprise tier pricing", "Year 2 roadmap", "Series A based on metrics"],
-  },
-];
+  const checklist = [
+    {
+      phase: "WEEK 1-2: FOUNDATION", color: "#a78bfa", icon: "🏗️",
+      items: [
+        { task: "Next.js 14 project scaffolded + pushed to GitHub", critical: true },
+        { task: "Vercel connected — staging URL live", critical: true },
+        { task: "Supabase project created (platform DB)", critical: true },
+        { task: "Prisma ORM configured + connected to Supabase", critical: true },
+        { task: "Core DB schema: customers, projects, deployments, subscriptions", critical: true },
+        { task: "NextAuth.js: email/password + Google OAuth working", critical: true },
+        { task: "Razorpay test keys integrated — test payment flows", critical: true },
+        { task: "GitHub org + 5 private template repo placeholders", critical: false },
+        { task: "wonderos.in domain + Cloudflare DNS configured", critical: false },
+        { task: "Staging vs production env separated on Vercel", critical: false },
+        { task: "Resend email connected + test email sent", critical: false },
+        { task: "Sentry error monitoring connected", critical: false },
+      ],
+    },
+    {
+      phase: "WEEK 3-4: TEMPLATE #1 — SERVICE BUSINESS HUB", color: "#60a5fa", icon: "🏢",
+      items: [
+        { task: "Template repo created with full folder structure", critical: true },
+        { task: "Next.js frontend: booking page, service catalog, client portal", critical: true },
+        { task: "Backend APIs: booking, availability logic, payments", critical: true },
+        { task: "React Native mobile screens scaffolded (iOS + Android)", critical: true },
+        { task: "Branding injection system: logo, colors, fonts via JSON config", critical: true },
+        { task: "Feature toggle engine: enable/disable modules per config", critical: true },
+        { task: "Per-app Supabase DB provisioning script tested", critical: true },
+        { task: "Cloudflare R2 bucket provisioning script tested", critical: false },
+        { task: "Service owner admin dashboard (bookings, revenue)", critical: false },
+        { task: "Auto email confirmation on booking", critical: false },
+        { task: "Template docs: features, config options, customization points", critical: false },
+      ],
+    },
+    {
+      phase: "WEEK 5-6: DEPLOYMENT PIPELINE", color: "#34d399", icon: "🚀",
+      items: [
+        { task: "GitHub Actions workflow written + tested end-to-end", critical: true },
+        { task: "Vercel programmatic Deploy API working", critical: true },
+        { task: "Full pipeline: payment → trigger → clone → inject → deploy → LIVE", critical: true },
+        { task: "Cloudflare domain + SSL auto-config via API", critical: true },
+        { task: "Health checks: post-deploy endpoint verification", critical: true },
+        { task: "Real-time deployment status in platform DB", critical: true },
+        { task: "Founder notification email on deploy success", critical: false },
+        { task: "Failed deploy → Slack/email alert to Wonder team", critical: false },
+        { task: "Rollback: auto-revert if health check fails", critical: false },
+        { task: "Deploy logs stored + viewable", critical: false },
+      ],
+    },
+    {
+      phase: "WEEK 7-8: FOUNDER DASHBOARD", color: "#fb923c", icon: "📊",
+      items: [
+        { task: "Registration + onboarding flow (signup → verify → profile)", critical: true },
+        { task: "Configurator: template picker → features → pricing preview", critical: true },
+        { task: "Dashboard home: projects, status, quick actions", critical: true },
+        { task: "Real-time deployment progress tracker (visual steps)", critical: true },
+        { task: "Billing: plan, invoices, upgrade/downgrade", critical: true },
+        { task: "Support tickets: create, status, reply", critical: true },
+        { task: "Onboarding checklist for first-time setup", critical: false },
+        { task: "Settings: profile, team, API keys", critical: false },
+        { task: "Dashboard fully mobile-responsive", critical: false },
+      ],
+    },
+    {
+      phase: "WEEK 9-10: TEMPLATE #2 + MOBILE BUILDS", color: "#f472b6", icon: "🏥📱",
+      items: [
+        { task: "Healthcare Management template built (patient + doctor portals)", critical: true },
+        { task: "Appointment booking + availability (healthcare-specific)", critical: true },
+        { task: "React Native builds working via Expo EAS Build", critical: true },
+        { task: "iOS .ipa generated + code-signed", critical: true },
+        { task: "Android .aab generated + signed", critical: true },
+        { task: "TestFlight beta distribution set up", critical: true },
+        { task: "App Store submission guide (step-by-step)", critical: false },
+        { task: "Play Store submission guide", critical: false },
+        { task: "Mobile branding injection tested (icon, splash, colors)", critical: false },
+        { task: "E2E mobile test suite (basic flows)", critical: false },
+      ],
+    },
+    {
+      phase: "WEEK 11-12: TEMPLATES #3-5 + LAUNCH", color: "#c084fc", icon: "🚢",
+      items: [
+        { task: "Real Estate Platform template built + tested", critical: true },
+        { task: "Education & Coaching template built + tested", critical: true },
+        { task: "E-commerce Store template built + tested", critical: true },
+        { task: "All 5 templates deployed end-to-end at least once", critical: true },
+        { task: "5 beta founders onboarded + apps live", critical: true },
+        { task: "Beta feedback collected + critical bugs fixed", critical: true },
+        { task: "Internal ops dashboard for Wonder team", critical: false },
+        { task: "Public website: landing, pricing, case studies, demo", critical: false },
+        { task: "Launch announcement prepped (email, social, communities)", critical: false },
+        { task: "Post-launch monitoring: Sentry + uptime + alerts active", critical: false },
+      ],
+    },
+  ];
 
-const uxFlows = {
-  onboarding: {
-    label: "Onboarding", color: "#a78bfa",
-    steps: [
-      { title: "Sign Up", lines: ["⚡ Wonder OS", "─────────────", "Build your app today", "Production-ready in 30 days", "─────────────", "[  Full Name  ]", "[  Email Address  ]", "[  Password  ]", "─────────────", "▶  Create Account", "Already have account? Sign in"] },
-      { title: "Verify Email", lines: ["⚡ Wonder OS", "─────────────", "📧", "Check your inbox", "We sent a verification link to your@email.com", "─────────────", "▶  Resend Email", "← Back"] },
-      { title: "Profile", lines: ["⚡ Wonder OS", "─  Step 2 of 3  ─", "About you", "─────────────", "[  Company / Project Name  ]", "[  Industry (dropdown)  ]", "[  Team Size  ]", "[  Phone +91  ]", "─────────────", "▶  Continue →"] },
-      { title: "Pick Goal", lines: ["⚡ Wonder OS", "─  Step 3 of 3  ─", "What do you want to build?", "We'll recommend the best template", "─────────────", "🏢  Service Business", "🏥  Healthcare App", "🏠  Real Estate", "📚  Education", "🛒  E-commerce", "─────────────", "▶  Go to Configurator →"] },
-    ],
-  },
-  configurator: {
-    label: "Configurator", color: "#60a5fa",
-    steps: [
-      { title: "Pick Template", lines: ["⚡ Wonder OS  |  Configurator  |  Dashboard", "─  Step 1 → 2 → 3 → 4  ─", "Choose your template", "─────────────", "🏢  Service Business Hub  —  ₹5.9L", "🏥  Healthcare Management  —  ₹6.9L", "🏠  Real Estate Platform  —  ₹5.5L", "📚  Education & Coaching  —  ₹5.2L", "🛒  E-commerce Store  —  ₹6.5L", "─────────────", "▶  Select & Continue →"] },
-      { title: "Features", lines: ["⚡ Wonder OS  |  Configurator  |  Dashboard", "─  Step 1 ✓  →  Step 2  →  3 → 4  ─", "Pick your features", "─────────────", "✓  Booking System (included)  [ON]", "✓  Payment Gateway (included)  [ON]", "○  AI Chatbot +₹40,000  [OFF]", "○  SMS Reminders +₹15,000  [OFF]", "○  WhatsApp +₹25,000  [OFF]", "○  Lead Management +₹30,000  [OFF]", "─────────────", "Total: ₹5,90,000", "▶  Continue →"] },
-      { title: "Brand", lines: ["⚡ Wonder OS  |  Configurator  |  Dashboard", "─  Step 1 ✓  →  2 ✓  →  Step 3  → 4  ─", "Brand it your way", "─────────────", "[  Upload Logo  ]", "Primary Color  [🟣]", "Secondary Color  [🔵]", "[  App Name  ]", "[  Your Domain  ]", "─────────────", "[ Live Preview of your app ]", "▶  Continue →"] },
-      { title: "Review + Pay", lines: ["⚡ Wonder OS  |  Configurator  |  Dashboard", "─  Steps 1-3 ✓  →  Step 4  ─", "Review your order", "─────────────", "Template: Service Business Hub", "Features: Booking, Payments, SMS", "Domain: app.mycompany.com", "Timeline: 30 days to live", "─────────────", "Total: ₹6,05,000", "▶  Pay with Razorpay →", "← Edit"] },
-    ],
-  },
-  dashboard: {
-    label: "Dashboard", color: "#fb923c",
-    steps: [
-      { title: "Home", lines: ["⚡ Wonder  |  🏠 Home  📦 Projects  💳 Billing  🎫 Support", "─────────────", "Welcome back, Priyabrata", "─────────────", "Active Apps: 3  |  MRR: ₹1.8L  |  Due: Mar 15", "─────────────", "📦  Nabo Clothing  —  LIVE ✓  —  2 days ago", "📦  MediqAI  —  DEPLOYING…  —  Step 8 / 12", "─────────────", "▶  + Start New Project"] },
-      { title: "Projects", lines: ["⚡ Wonder  |  🏠 Home  📦 Projects  💳 Billing  🎫 Support", "─────────────", "My Projects", "All  |  Live  |  Deploying  |  Draft", "─────────────", "🏢  Nabo Clothing  —  LIVE ✓  —  ₹1.2L/mo", "🏥  MediqAI  —  DEPLOYING  —  In progress", "🛒  QuickMart  —  LIVE ✓  —  ₹80K/mo", "─────────────", "▶  + New Project"] },
-      { title: "Deploy Status", lines: ["⚡ Wonder  |  🏠 Home  📦 Projects  💳 Billing  🎫 Support", "─────────────", "MediqAI — Deployment Status", "─────────────", "✅  Payment confirmed", "✅  Template cloned", "✅  Config injected", "✅  Database provisioned", "⏳  Building & deploying… (3 min)", "⭕  Domain configuration", "⭕  Health check", "⭕  LIVE!", "─  ~8 minutes remaining  ─"] },
-      { title: "Support", lines: ["⚡ Wonder  |  🏠 Home  📦 Projects  💳 Billing  🎫 Support", "─────────────", "Support Tickets", "▶  + New Ticket", "─────────────", "🎫  #1042  —  App icon not showing  —  Open  —  2hrs", "🎫  #1038  —  Payment gateway test  —  Resolved ✓", "🎫  #1035  —  Add new service type  —  In Progress"] },
-    ],
-  },
-  billing: {
-    label: "Billing", color: "#34d399",
-    steps: [
-      { title: "Plans", lines: ["⚡ Wonder  |  🏠 Home  📦 Projects  💳 Billing  🎫 Support", "─────────────", "Billing & Plans", "─────────────", "Current: Wonder Pro — ₹25,000/mo — Up to 5 apps", "Apps Used: 3 of 5", "Maintenance MRR: ₹1,80,000", "─────────────", "▶  Upgrade Plan"] },
-      { title: "Invoices", lines: ["⚡ Wonder  |  🏠 Home  📦 Projects  💳 Billing  🎫 Support", "─────────────", "Invoices", "─────────────", "INV-031  —  ₹25,000  —  Feb 2026  —  Paid ✓", "INV-030  —  ₹6,05,000  —  Jan 2026  —  Paid ✓  (Setup)", "INV-029  —  ₹25,000  —  Jan 2026  —  Paid ✓"] },
-      { title: "Usage", lines: ["⚡ Wonder  |  🏠 Home  📦 Projects  💳 Billing  🎫 Support", "─────────────", "Usage This Month", "─────────────", "Deployments: 2  |  API Calls: 12.4K  |  Storage: 2.3GB", "─────────────", "Nabo Clothing  —  8.2K calls  —  1.1GB", "QuickMart  —  4.2K calls  —  1.2GB"] },
-    ],
-  },
-};
+  const postData = [
+    {
+      month: "Month 4-5", title: "REVENUE + ITERATION", color: "#6366f1",
+      targets: ["10-20 paying customers", "₹1-2 Cr revenue", "95%+ store approval"],
+      actions: ["Fix all beta bugs", "Add PostHog analytics (free tier)", "Email drip sequences for founders", "Refine configurator from real usage", "Maintenance revenue starts (₹50K-2L/mo per app)", "Track NPS, churn, LTV"],
+    },
+    {
+      month: "Month 6", title: "GROWTH ENGINE", color: "#60a5fa",
+      targets: ["30+ apps deployed", "₹3-5 Cr revenue", "MRR ₹20-40L"],
+      actions: ["Simple CRM (HubSpot free)", "WhatsApp per client (manual)", "n8n for internal ops only", "Client case study videos", "Launch referral program", "Finalize sales playbook for Anirban"],
+    },
+    {
+      month: "Month 7-9", title: "AI + SCALE", color: "#34d399",
+      targets: ["50+ apps deployed", "₹5-10 Cr revenue", "Team 12-15 people"],
+      actions: ["Wonder Concierge AI chatbot (optional)", "Wonder Filter AI lead scoring", "Upgraded self-service configurator", "2-3 new templates from demand", "International pricing (USD)", "Seed fundraise if needed"],
+    },
+    {
+      month: "Month 10-12", title: "PLATFORM PLAY", color: "#fb923c",
+      targets: ["100+ apps deployed", "₹10-15 Cr revenue", "MRR ₹1 Cr+"],
+      actions: ["White-label pilot (3-5 agencies)", "Template marketplace beta", "Full founder analytics", "Enterprise tier pricing", "Year 2 roadmap", "Series A based on metrics"],
+    },
+  ];
 
-export default function App() {
+  const uxFlows = {
+    onboarding: {
+      label: "Onboarding", color: "#a78bfa",
+      steps: [
+        { title: "Sign Up", lines: ["⚡ Wonder OS", "─────────────", "Build your app today", "Production-ready in 30 days", "─────────────", "[  Full Name  ]", "[  Email Address  ]", "[  Password  ]", "─────────────", "▶  Create Account", "Already have account? Sign in"] },
+        { title: "Verify Email", lines: ["⚡ Wonder OS", "─────────────", "📧", "Check your inbox", "We sent a verification link to your@email.com", "─────────────", "▶  Resend Email", "← Back"] },
+        { title: "Profile", lines: ["⚡ Wonder OS", "─  Step 2 of 3  ─", "About you", "─────────────", "[  Company / Project Name  ]", "[  Industry (dropdown)  ]", "[  Team Size  ]", "[  Phone +91  ]", "─────────────", "▶  Continue →"] },
+        { title: "Pick Goal", lines: ["⚡ Wonder OS", "─  Step 3 of 3  ─", "What do you want to build?", "We'll recommend the best template", "─────────────", "🏢  Service Business", "🏥  Healthcare App", "🏠  Real Estate", "📚  Education", "🛒  E-commerce", "─────────────", "▶  Go to Configurator →"] },
+      ],
+    },
+    configurator: {
+      label: "Configurator", color: "#60a5fa",
+      steps: [
+        { title: "Pick Template", lines: ["⚡ Wonder OS  |  Configurator  |  Dashboard", "─  Step 1 → 2 → 3 → 4  ─", "Choose your template", "─────────────", "🏢  Service Business Hub  —  ₹5.9L", "🏥  Healthcare Management  —  ₹6.9L", "🏠  Real Estate Platform  —  ₹5.5L", "📚  Education & Coaching  —  ₹5.2L", "🛒  E-commerce Store  —  ₹6.5L", "─────────────", "▶  Select & Continue →"] },
+        { title: "Features", lines: ["⚡ Wonder OS  |  Configurator  |  Dashboard", "─  Step 1 ✓  →  Step 2  →  3 → 4  ─", "Pick your features", "─────────────", "✓  Booking System (included)  [ON]", "✓  Payment Gateway (included)  [ON]", "○  AI Chatbot +₹40,000  [OFF]", "○  SMS Reminders +₹15,000  [OFF]", "○  WhatsApp +₹25,000  [OFF]", "○  Lead Management +₹30,000  [OFF]", "─────────────", "Total: ₹5,90,000", "▶  Continue →"] },
+        { title: "Brand", lines: ["⚡ Wonder OS  |  Configurator  |  Dashboard", "─  Step 1 ✓  →  2 ✓  →  Step 3  → 4  ─", "Brand it your way", "─────────────", "[  Upload Logo  ]", "Primary Color  [🟣]", "Secondary Color  [🔵]", "[  App Name  ]", "[  Your Domain  ]", "─────────────", "[ Live Preview of your app ]", "▶  Continue →"] },
+        { title: "Review + Pay", lines: ["⚡ Wonder OS  |  Configurator  |  Dashboard", "─  Steps 1-3 ✓  →  Step 4  ─", "Review your order", "─────────────", "Template: Service Business Hub", "Features: Booking, Payments, SMS", "Domain: app.mycompany.com", "Timeline: 30 days to live", "─────────────", "Total: ₹6,05,000", "▶  Pay with Razorpay →", "← Edit"] },
+      ],
+    },
+    dashboard: {
+      label: "Dashboard", color: "#fb923c",
+      steps: [
+        { title: "Home", lines: ["⚡ Wonder  |  🏠 Home  📦 Projects  💳 Billing  🎫 Support", "─────────────", "Welcome back, Priyabrata", "─────────────", "Active Apps: 3  |  MRR: ₹1.8L  |  Due: Mar 15", "─────────────", "📦  Nabo Clothing  —  LIVE ✓  —  2 days ago", "📦  MediqAI  —  DEPLOYING…  —  Step 8 / 12", "─────────────", "▶  + Start New Project"] },
+        { title: "Projects", lines: ["⚡ Wonder  |  🏠 Home  📦 Projects  💳 Billing  🎫 Support", "─────────────", "My Projects", "All  |  Live  |  Deploying  |  Draft", "─────────────", "🏢  Nabo Clothing  —  LIVE ✓  —  ₹1.2L/mo", "🏥  MediqAI  —  DEPLOYING  —  In progress", "🛒  QuickMart  —  LIVE ✓  —  ₹80K/mo", "─────────────", "▶  + New Project"] },
+        { title: "Deploy Status", lines: ["⚡ Wonder  |  🏠 Home  📦 Projects  💳 Billing  🎫 Support", "─────────────", "MediqAI — Deployment Status", "─────────────", "✅  Payment confirmed", "✅  Template cloned", "✅  Config injected", "✅  Database provisioned", "⏳  Building & deploying… (3 min)", "⭕  Domain configuration", "⭕  Health check", "⭕  LIVE!", "─  ~8 minutes remaining  ─"] },
+        { title: "Support", lines: ["⚡ Wonder  |  🏠 Home  📦 Projects  💳 Billing  🎫 Support", "─────────────", "Support Tickets", "▶  + New Ticket", "─────────────", "🎫  #1042  —  App icon not showing  —  Open  —  2hrs", "🎫  #1038  —  Payment gateway test  —  Resolved ✓", "🎫  #1035  —  Add new service type  —  In Progress"] },
+      ],
+    },
+    billing: {
+      label: "Billing", color: "#34d399",
+      steps: [
+        { title: "Plans", lines: ["⚡ Wonder  |  🏠 Home  📦 Projects  💳 Billing  🎫 Support", "─────────────", "Billing & Plans", "─────────────", "Current: Wonder Pro — ₹25,000/mo — Up to 5 apps", "Apps Used: 3 of 5", "Maintenance MRR: ₹1,80,000", "─────────────", "▶  Upgrade Plan"] },
+        { title: "Invoices", lines: ["⚡ Wonder  |  🏠 Home  📦 Projects  💳 Billing  🎫 Support", "─────────────", "Invoices", "─────────────", "INV-031  —  ₹25,000  —  Feb 2026  —  Paid ✓", "INV-030  —  ₹6,05,000  —  Jan 2026  —  Paid ✓  (Setup)", "INV-029  —  ₹25,000  —  Jan 2026  —  Paid ✓"] },
+        { title: "Usage", lines: ["⚡ Wonder  |  🏠 Home  📦 Projects  💳 Billing  🎫 Support", "─────────────", "Usage This Month", "─────────────", "Deployments: 2  |  API Calls: 12.4K  |  Storage: 2.3GB", "─────────────", "Nabo Clothing  —  8.2K calls  —  1.1GB", "QuickMart  —  4.2K calls  —  1.2GB"] },
+      ],
+    },
+  };
+
+  // ... (data remain same)
+
+  // export default function WonderOSComplete() { // moved to top
   const [tab, setTab] = useState("checklist");
   const [openIdx, setOpenIdx] = useState(-1);
   const [uxFlow, setUxFlow] = useState("onboarding");
@@ -166,10 +170,10 @@ export default function App() {
   const screen = flow.steps[uxStep];
 
   return (
-    <div style={{ background: "#0b0b12", minHeight: "100vh", color: "#e2e8f0", fontFamily: "Inter, system-ui, sans-serif", fontSize: 14 }}>
+    <div style={{ color: "#e2e8f0", fontFamily: "Inter, system-ui, sans-serif" }}>
 
       {/* HEADER */}
-      <div style={{ background: "linear-gradient(135deg, #12121f, #0b0b12)", borderBottom: "1px solid #222", padding: "18px 24px", display: "flex", alignItems: "center", gap: 14 }}>
+      <div style={{ background: "linear-gradient(135deg, #12121f, #0b0b12)", borderRadius: "16px", border: "1px solid rgba(255,255,255,0.05)", padding: "18px 24px", display: "flex", alignItems: "center", gap: 14, marginBottom: "24px" }}>
         <div style={{ width: 40, height: 40, borderRadius: 10, background: "linear-gradient(135deg, #6366f1, #a78bfa)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>⚡</div>
         <div>
           <div style={{ fontSize: 20, fontWeight: 700, color: "#fff" }}>Wonder OS — Execution Plan</div>
@@ -178,7 +182,7 @@ export default function App() {
       </div>
 
       {/* TAB BAR */}
-      <div style={{ display: "flex", gap: 6, padding: "12px 24px", background: "#0f0f18", borderBottom: "1px solid #222" }}>
+      <div style={{ display: "flex", gap: "6px", padding: "6px", background: "rgba(255,255,255,0.02)", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.03)", marginBottom: "24px", overflowX: "auto" }}>
         {[
           { id: "checklist", label: "✓  90-Day Checklist" },
           { id: "after90", label: "🚀  After 90 Days" },
@@ -194,7 +198,7 @@ export default function App() {
         ))}
       </div>
 
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "24px 24px 40px" }}>
+      <div style={{ margin: "0 auto" }}>
 
         {/* ============ CHECKLIST TAB ============ */}
         {tab === "checklist" && (
